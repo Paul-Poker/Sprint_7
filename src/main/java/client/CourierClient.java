@@ -6,10 +6,12 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
+
 public class CourierClient extends RestClient {
 
     private static final String COURIER_PATH = "api/v1/courier";
     private static final String LOGIN_PATH = "api/v1/courier/login";
+    private static final String COURIER_DELETE = "/api/v1/courier/:id";
 
     @Step("Создание курьера")
     public ValidatableResponse createCourier(CourierData courier) {
@@ -31,8 +33,12 @@ public class CourierClient extends RestClient {
                 .then();
     }
 
-    @Step("Удаление курьера по ID: {id}")
-    public void deleteCourier(int id) {
+    @Step("Удаление курьера по id")
+    public void deleteCourier(Integer courierId) {
+        given()
+                .spec(requestSpecification())
+                .when()
+                .delete(COURIER_DELETE + "/" + courierId);
     }
 
 }

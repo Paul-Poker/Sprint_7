@@ -1,9 +1,10 @@
-package courier_test;
+package couriertest;
 
 import client.CourierClient;
 import data.CourierCredentials;
 import data.CourierData;
 import data.CourierGenerator;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -14,9 +15,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class LoginCourierTest {
-    CourierClient courierClient;
-    CourierData courier;
-    Integer courierId;
+    private CourierClient courierClient;
+    private CourierData courier;
+    private Integer courierId;
 
     @Before
     public void setUp() {
@@ -36,6 +37,7 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Авторизация существующего пользователя")
     public void successfulLoginReturnsOkAndId() {
         CourierCredentials validCredentials = CourierCredentials.from(courier);
         courierClient.loginCourier(validCredentials).assertThat()
@@ -44,6 +46,7 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Авторизация c пустым логином")
     public void loginWithMissingLoginReturnsScBadRequest() {
         CourierCredentials credentialsWithoutLogin = new CourierCredentials("", "validPassword");
         courierClient.loginCourier(credentialsWithoutLogin).assertThat()
@@ -52,6 +55,7 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Авторизация c пустым паролем")
     public void loginWithMissingPasswordReturnsSCScBadRequest() {
         CourierCredentials credentialsWithoutPassword = new CourierCredentials("validLogin", "");
         courierClient.loginCourier(credentialsWithoutPassword).assertThat()
@@ -60,6 +64,7 @@ public class LoginCourierTest {
     }
 
     @Test
+    @DisplayName("Авторизация под несуществующим пользователем")
     public void loginWithInvalidCredentialsReturnsScNotFound() {
         CourierCredentials invalidCredentials = new CourierCredentials("invalidLogin", "invalidPassword");
         courierClient.loginCourier(invalidCredentials).assertThat()

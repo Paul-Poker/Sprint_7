@@ -1,7 +1,8 @@
-package order_test;
+package ordertest;
 
 import client.OrderClient;
 import data.OrderData;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -40,6 +41,7 @@ public class CreateOrderParameterizedTest {
     }
 
     @Test
+    @DisplayName("Заказ с выбором цвета")
     public void testCreateOrderWithColor() {
         OrderData orderData = new OrderData("Naruto", "Uchiha", "Konoha, 142 apt.",
                 4, "+7 800 355 35 35", 5, "2020-06-06",

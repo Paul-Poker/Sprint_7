@@ -1,6 +1,7 @@
-package order_test;
+package ordertest;
 
 import client.OrderClient;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -20,6 +21,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Проверка, что в тело ответа возвращается список заказов")
     public void testGetOrdersReturnsListOfOrders() {
         ValidatableResponse response = orderClient.getOrders();
         response.assertThat()
@@ -29,6 +31,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Заказ с несуществующим id курьерв")
     public void testGetOrdersWithNonExistentCourierId() {
         Map<String, Object> params = new HashMap<>();
         params.put("courierId", 0);
